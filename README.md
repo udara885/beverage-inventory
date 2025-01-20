@@ -5,7 +5,7 @@ This is a simple Beverage Store App built using MERN stack. This app is divided 
 ## Table of Contents
 
 - [Features](#features)
-- [Installation and Run](#installation_and_run)
+- [Installation and Run](#installation)
 
 ## Features
 
@@ -13,7 +13,7 @@ This is a simple Beverage Store App built using MERN stack. This app is divided 
 - Update beverages
 - Delete beverages
 
-## Installation and Run
+## Installation
 
 To get a copy of this project up and running on your local machine for development and testing purposes, follow these steps:
 
