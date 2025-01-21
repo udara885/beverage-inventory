@@ -2,7 +2,15 @@ import { useEffect } from "react"
 import { useBeverageStore } from "../store/beverage"
 import BeverageCard from "../components/BeverageCard"
 
-const HomePage = ({ isAdmin, setIsAddOpen, setIsUpdateOpen, setId }) => {
+const HomePage = ({
+	isAdmin,
+	setIsAddOpen,
+	setIsUpdateOpen,
+	setId,
+	cartItems,
+	setCartItems,
+	setIsDetailOpen
+}) => {
 	const { getBeverages, beverages } = useBeverageStore()
 
 	useEffect(() => {
@@ -21,8 +29,11 @@ const HomePage = ({ isAdmin, setIsAddOpen, setIsUpdateOpen, setId }) => {
 							key={beverage._id}
 							beverage={beverage}
 							isAdmin={isAdmin}
-							setIsUpdateOpen={ setIsUpdateOpen }
-							setId={ setId }
+							setIsUpdateOpen={setIsUpdateOpen}
+							setId={setId}
+							cartItems={cartItems}
+							setCartItems={ setCartItems }
+							setIsDetailOpen={setIsDetailOpen}
 						/>
 					))}
 				</div>
@@ -31,7 +42,7 @@ const HomePage = ({ isAdmin, setIsAddOpen, setIsUpdateOpen, setId }) => {
 						No beverages found 😥.{" "}
 						{isAdmin && (
 							<span
-								className="text-blue-500 hover:underline"
+								className="text-blue-500 hover:underline cursor-pointer"
 								onClick={() => setIsAddOpen(true)}
 							>
 								Add a Beverage
