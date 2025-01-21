@@ -1,10 +1,15 @@
-import HomePage from './HomePage'
+import HomePage from "./HomePage"
 
-const AdminPage = ( { isAdmin, setIsUpdateOpen, setId } ) =>
-{  
-  return (
-    <HomePage isAdmin={ isAdmin } setIsUpdateOpen={setIsUpdateOpen} setId={setId} />
-  )
+const AdminPage = ({ isAdmin, setIsAddOpen, setIsUpdateOpen, setIsDetailOpen, setId }) => {
+	return (
+		<HomePage
+			isAdmin={isAdmin}
+			setIsAddOpen={setIsAddOpen}
+      setIsUpdateOpen={ setIsUpdateOpen }
+      setIsDetailOpen={ setIsDetailOpen }
+			setId={setId}
+		/>
+	)
 }
 
 export default AdminPage
