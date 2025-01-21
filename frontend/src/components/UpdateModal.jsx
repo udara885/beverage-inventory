@@ -6,16 +6,17 @@ const UpdateModal = ({ setIsUpdateOpen, id }) => {
 	const { updateBeverage } = useBeverageStore()
 	const beverage = useBeverageStore((state) =>
 		state.beverages.find((beverage) => beverage._id === id)
-	)	
+	)
 	const [updatedBeverage, setUpdatedBeverage] = useState(beverage)
 
 	const handleUpdateBeverage = async (id, updatedBeverage) => {
 		const { success, message } = await updateBeverage(id, updatedBeverage)
 		if (!success) {
 			toast.error(message)
-		} if(success) {
-			toast.success( message )
-			setIsUpdateOpen( false )
+		}
+		if (success) {
+			toast.success(message)
+			setIsUpdateOpen(false)
 		}
 	}
 
@@ -64,12 +65,24 @@ const UpdateModal = ({ setIsUpdateOpen, id }) => {
 						})
 					}
 				/>
+				<textarea
+					name="description"
+					placeholder="Description"
+					value={updatedBeverage.description}
+					onChange={(e) =>
+						setUpdatedBeverage({
+							...updatedBeverage,
+							description: e.target.value,
+						})
+					}
+					rows={4}
+					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:outline-none border-2 rounded-md text-white resize-none"
+				/>
 				<button
 					className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
-					onClick={() => handleUpdateBeverage(
-						beverage._id,
-						updatedBeverage
-					)}
+					onClick={() =>
+						handleUpdateBeverage(beverage._id, updatedBeverage)
+					}
 				>
 					Update Beverage
 				</button>
