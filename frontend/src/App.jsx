@@ -33,7 +33,8 @@ function App() {
 			<Navbar
 				isAdmin={isAdmin}
 				setIsAddOpen={setIsAddOpen}
-				setIsCartOpen={setIsCartOpen}
+				setIsCartOpen={ setIsCartOpen }
+				cartItems={cartItems}
 			/>
 			{isAddOpen && <AddModal setIsAddOpen={setIsAddOpen} />}
 			{isUpdateOpen && (
