@@ -2,7 +2,15 @@ import { useBeverageStore } from "../store/beverage"
 import { Pencil, Trash } from "lucide-react"
 import toast from "react-hot-toast"
 
-const BeverageCard = ({ beverage, isAdmin, setIsUpdateOpen, setId }) => {
+const BeverageCard = ({
+	beverage,
+	isAdmin,
+	setIsUpdateOpen,
+	setId,
+	cartItems,
+	setCartItems,
+	setIsDetailOpen
+}) => {
 	const { deleteBeverage } = useBeverageStore()
 
 	const handleDelete = async (id) => {
@@ -19,7 +27,11 @@ const BeverageCard = ({ beverage, isAdmin, setIsUpdateOpen, setId }) => {
 			<img
 				src={beverage.image}
 				alt={beverage.name}
-				className="h-44 w-full object-cover"
+				className="h-44 w-full object-cover cursor-pointer"
+				onClick={() => {
+					setIsDetailOpen(true)
+					setId(beverage._id)
+				}}
 			/>
 			<div className="p-4">
 				<div className="flex justify-between">
@@ -30,7 +42,7 @@ const BeverageCard = ({ beverage, isAdmin, setIsUpdateOpen, setId }) => {
 						LKR {beverage.price}.00
 					</h4>
 				</div>
-				{isAdmin && (
+				{isAdmin ? (
 					<div className="flex gap-2">
 						<button
 							className="p-2 bg-blue-400 hover:bg-blue-500 rounded-md"
@@ -48,6 +60,24 @@ const BeverageCard = ({ beverage, isAdmin, setIsUpdateOpen, setId }) => {
 							<Trash size={20} />
 						</button>
 					</div>
+				) : (
+					<button
+						className="p-2 bg-blue-400 hover:bg-blue-500 rounded-md font-bold text-gray-900"
+						onClick={() => {
+							if (
+								cartItems.find(
+									(item) => item._id === beverage._id
+								)
+							) {
+								toast.error(`Item already in cart`)
+							} else {
+								setCartItems([...cartItems, beverage])
+								toast.success(`Item added to cart`)
+							}
+						}}
+					>
+						Add to Cart
+					</button>
 				)}
 			</div>
 		</div>
