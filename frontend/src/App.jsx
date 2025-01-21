@@ -6,13 +6,18 @@ import AdminPage from "./pages/AdminPage"
 import { Toaster } from "react-hot-toast"
 import AddModal from "./components/AddModal"
 import UpdateModal from "./components/UpdateModal"
+import CartModal from "./components/CartModal"
+import DetailModal from "./components/DetailModal"
 
 function App() {
 	const location = useLocation()
 	const [isAdmin, setIsAdmin] = useState(false)
 	const [isAddOpen, setIsAddOpen] = useState(false)
-	const [ isUpdateOpen, setIsUpdateOpen ] = useState( false )
-	const [id, setId] = useState( "" )
+	const [isUpdateOpen, setIsUpdateOpen] = useState(false)
+	const [isCartOpen, setIsCartOpen] = useState(false)
+	const [isDetailOpen, setIsDetailOpen] = useState(false)
+	const [id, setId] = useState("")
+	const [cartItems, setCartItems] = useState([])
 
 	useEffect(() => {
 		if (location.pathname === "/admin") {
@@ -28,21 +33,44 @@ function App() {
 			<Navbar
 				isAdmin={isAdmin}
 				setIsAddOpen={setIsAddOpen}
+				setIsCartOpen={setIsCartOpen}
 			/>
 			{isAddOpen && <AddModal setIsAddOpen={setIsAddOpen} />}
-			{isUpdateOpen && <UpdateModal setIsUpdateOpen={setIsUpdateOpen} id={id} />}
+			{isUpdateOpen && (
+				<UpdateModal
+					setIsUpdateOpen={setIsUpdateOpen}
+					id={id}
+				/>
+			)}
+			{isCartOpen && (
+				<CartModal
+					setIsCartOpen={setIsCartOpen}
+					cartItems={cartItems}
+					setCartItems={setCartItems}
+				/>
+			)}
+			{isDetailOpen && <DetailModal setIsDetailOpen={setIsDetailOpen} id={id} />}
 			<Routes>
 				<Route
 					path="/"
-					element={<HomePage setIsAddOpen={setIsAddOpen} />}
+					element={
+						<HomePage
+							cartItems={cartItems}
+							setCartItems={ setCartItems }
+							setIsDetailOpen={ setIsDetailOpen }
+							setId={setId}
+						/>
+					}
 				/>
 				<Route
 					path="/admin"
 					element={
 						<AdminPage
 							isAdmin={isAdmin}
+							setIsAddOpen={setIsAddOpen}
 							setIsUpdateOpen={ setIsUpdateOpen }
-							setId={ setId }
+							setIsDetailOpen={ setIsDetailOpen }
+							setId={setId}
 						/>
 					}
 				/>
