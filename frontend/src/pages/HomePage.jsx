@@ -1,6 +1,8 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useBeverageStore } from "../store/beverage"
 import BeverageCard from "../components/BeverageCard"
+import OrdersTable from "../components/OrdersTable"
+import { useOrderStore } from "../store/order"
 
 const HomePage = ({
 	isAdmin,
@@ -9,35 +11,63 @@ const HomePage = ({
 	setId,
 	cartItems,
 	setCartItems,
-	setIsDetailOpen
+	setIsDetailOpen,
+	setOrderId,
+	setIsOrderDetailOpen,
 }) => {
 	const { getBeverages, beverages } = useBeverageStore()
+	const { getOrders, orders } = useOrderStore()
+	const [view, setView] = useState("menu")
 
 	useEffect(() => {
 		getBeverages()
-	}, [getBeverages])
+		getOrders()
+	}, [getBeverages, getOrders])
 
 	return (
 		<div className="max-w-screen-xl mx-auto">
 			<div className="flex flex-col gap-8">
-				<h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center">
-					Menu
-				</h1>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-					{beverages.map((beverage) => (
-						<BeverageCard
-							key={beverage._id}
-							beverage={beverage}
-							isAdmin={isAdmin}
-							setIsUpdateOpen={setIsUpdateOpen}
-							setId={setId}
-							cartItems={cartItems}
-							setCartItems={ setCartItems }
-							setIsDetailOpen={setIsDetailOpen}
-						/>
-					))}
+				<div className="flex items-center justify-center gap-10">
+					<h1
+						className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center ${
+							isAdmin
+								? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 active:border-blue-500"
+								: ""
+						}`}
+						onClick={() => setView("menu")}
+					>
+						Menu
+					</h1>
+					{isAdmin && (
+						<h1
+							className={` text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center ${
+								isAdmin
+									? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 active:border-blue-500"
+									: ""
+							}`}
+							onClick={() => setView("orders")}
+						>
+							Orders
+						</h1>
+					)}
 				</div>
-				{beverages.length === 0 && (
+				{view === "menu" && (
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+						{beverages.map((beverage) => (
+							<BeverageCard
+								key={beverage._id}
+								beverage={beverage}
+								isAdmin={isAdmin}
+								setIsUpdateOpen={setIsUpdateOpen}
+								setId={setId}
+								cartItems={cartItems}
+								setCartItems={setCartItems}
+								setIsDetailOpen={setIsDetailOpen}
+							/>
+						))}
+					</div>
+				)}
+				{view === "menu" && beverages.length === 0 && (
 					<p className="text-xl text-center font-bold text-gray-500">
 						No beverages found 😥.{" "}
 						{isAdmin && (
@@ -48,6 +78,18 @@ const HomePage = ({
 								Add a Beverage
 							</span>
 						)}
+					</p>
+				)}
+				{view === "orders" && (
+					<OrdersTable
+						orders={orders}
+						setOrderId={setOrderId}
+						setIsOrderDetailOpen={setIsOrderDetailOpen}
+					/>
+				)}
+				{view === "orders" && orders.length === 0 && (
+					<p className="text-xl text-center font-bold text-gray-500">
+						No orders found 😥.{" "}
 					</p>
 				)}
 			</div>
