@@ -1,7 +1,44 @@
 import { Trash2 } from "lucide-react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import { useOrderStore } from "../store/order"
 
 const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
+	const total = cartItems.reduce(
+		(acc, item) => acc + item.price * item.quantity,
+		0
+	)
+
+	const [newOrder, setNewOrder] = useState({
+		items: [],
+		total: 0,
+	})
+
+	useEffect(() => {
+		setNewOrder({
+			items: cartItems,
+			total: total,
+		})
+	}, [cartItems, total])
+
+	const { createOrder } = useOrderStore()
+
+	const handleCreateOrder = async () => {
+		const { success, message } = await createOrder(newOrder)
+
+		if (!success) {
+			toast.error(message)
+		} else {
+			toast.success(message)
+			setIsCartOpen(false)
+		}
+		setNewOrder({
+			items: [],
+			total: 0,
+		})
+		setCartItems([])
+	}
+
 	const removeItem = (index) => {
 		const newCartItems = cartItems.filter((_, i) => i !== index)
 		setCartItems(newCartItems)
@@ -17,8 +54,8 @@ const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
 
 	return (
 		<div className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50">
-			<div className="max-w-lg max-h-full w-full flex flex-col gap-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-				<h1 className="text-2xl text-center dark:text-white text-black font-bold">
+			<div className="max-w-lg max-h-full w-full flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-md">
+				<h1 className="text-2xl text-center text-white font-bold">
 					Cart
 				</h1>
 				<hr className="bg-gray-400 border-0 h-px" />
@@ -83,24 +120,15 @@ const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
 					<div className="flex justify-between items-center">
 						<h3 className="text-lg text-gray-300">Total</h3>
 						<h3 className="text-lg text-gray-200 font-bold">
-							LKR{" "}
-							{cartItems.reduce(
-								(acc, item) => acc + item.price * item.quantity,
-								0
-							)}
-							.00
+							LKR {total}.00
 						</h3>
 					</div>
 				</div>
 				<button
 					className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
-					onClick={() => {
-						setCartItems([])
-						setIsCartOpen(false)
-						toast.success(`Checkout successful`)
-					}}
+					onClick={handleCreateOrder}
 				>
-					Checkout
+					Place Order
 				</button>
 				<button
 					className="w-full bg-gray-900 p-2 rounded-md font-bold text-blue-400 border-2 border-blue-400"
