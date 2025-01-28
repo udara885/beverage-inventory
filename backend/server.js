@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import path from "path"
 import { connectDB } from "./config/db.js"
 import beverageRoutes from "./routes/beverage.routes.js"
+import orderRoutes from "./routes/order.routes.js"
 
 dotenv.config()
 
@@ -13,7 +14,7 @@ const __dirname = path.resolve()
 
 app.use(express.json())
 
-app.use("/api", beverageRoutes)
+app.use("/api", beverageRoutes, orderRoutes)
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "/frontend/dist")))
