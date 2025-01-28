@@ -8,6 +8,7 @@ import AddModal from "./components/AddModal"
 import UpdateModal from "./components/UpdateModal"
 import CartModal from "./components/CartModal"
 import DetailModal from "./components/DetailModal"
+import OrderDetailModal from "./components/OrderDetailModal"
 
 function App() {
 	const location = useLocation()
@@ -16,7 +17,9 @@ function App() {
 	const [isUpdateOpen, setIsUpdateOpen] = useState(false)
 	const [isCartOpen, setIsCartOpen] = useState(false)
 	const [isDetailOpen, setIsDetailOpen] = useState(false)
+	const [isOrderDetailOpen, setIsOrderDetailOpen] = useState(false)
 	const [id, setId] = useState("")
+	const [orderId, setOrderId] = useState("")
 	const [cartItems, setCartItems] = useState([])
 
 	useEffect(() => {
@@ -28,12 +31,12 @@ function App() {
 	}, [location.pathname])
 
 	return (
-		<div className="min-h-screen px-5 py-5 dark:bg-gray-900 bg-gray-100">
+		<div className="min-h-screen px-5 py-5 bg-gray-900">
 			<Toaster />
 			<Navbar
 				isAdmin={isAdmin}
 				setIsAddOpen={setIsAddOpen}
-				setIsCartOpen={ setIsCartOpen }
+				setIsCartOpen={setIsCartOpen}
 				cartItems={cartItems}
 			/>
 			{isAddOpen && <AddModal setIsAddOpen={setIsAddOpen} />}
@@ -50,15 +53,26 @@ function App() {
 					setCartItems={setCartItems}
 				/>
 			)}
-			{isDetailOpen && <DetailModal setIsDetailOpen={setIsDetailOpen} id={id} />}
+			{isDetailOpen && (
+				<DetailModal
+					setIsDetailOpen={setIsDetailOpen}
+					id={id}
+				/>
+			)}
+			{isOrderDetailOpen && (
+				<OrderDetailModal
+					setIsOrderDetailOpen={setIsOrderDetailOpen}
+					orderId={orderId}
+				/>
+			)}
 			<Routes>
 				<Route
 					path="/"
 					element={
 						<HomePage
 							cartItems={cartItems}
-							setCartItems={ setCartItems }
-							setIsDetailOpen={ setIsDetailOpen }
+							setCartItems={setCartItems}
+							setIsDetailOpen={setIsDetailOpen}
 							setId={setId}
 						/>
 					}
@@ -69,9 +83,11 @@ function App() {
 						<AdminPage
 							isAdmin={isAdmin}
 							setIsAddOpen={setIsAddOpen}
-							setIsUpdateOpen={ setIsUpdateOpen }
-							setIsDetailOpen={ setIsDetailOpen }
+							setIsUpdateOpen={setIsUpdateOpen}
+							setIsDetailOpen={setIsDetailOpen}
 							setId={setId}
+							setOrderId={setOrderId}
+							setIsOrderDetailOpen={setIsOrderDetailOpen}
 						/>
 					}
 				/>
