@@ -9,7 +9,7 @@ const BeverageCard = ({
 	setId,
 	cartItems,
 	setCartItems,
-	setIsDetailOpen
+	setIsDetailOpen,
 }) => {
 	const { deleteBeverage } = useBeverageStore()
 
@@ -23,7 +23,7 @@ const BeverageCard = ({
 	}
 
 	return (
-		<div className="shadow-lg rounded-lg overflow-hidden hover:shadow-xl bg-white dark:bg-gray-800">
+		<div className="shadow-lg rounded-lg overflow-hidden hover:shadow-xl bg-gray-800">
 			<img
 				src={beverage.image}
 				alt={beverage.name}
@@ -35,10 +35,10 @@ const BeverageCard = ({
 			/>
 			<div className="p-4">
 				<div className="flex justify-between">
-					<h3 className="mb-2 text-xl font-bold text-black dark:text-white">
+					<h3 className="mb-2 text-xl font-bold text-white">
 						{beverage.name}
 					</h3>
-					<h4 className="font-bold text-lg text-gray-600 dark:text-gray-200 mb-4">
+					<h4 className="font-bold text-lg text-gray-200 mb-4">
 						LKR {beverage.price}.00
 					</h4>
 				</div>
