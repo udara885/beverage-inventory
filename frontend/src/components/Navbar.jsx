@@ -10,7 +10,7 @@ const Navbar = ({ isAdmin, setIsAddOpen, setIsCartOpen, cartItems }) => {
 				</h1>
 				{isAdmin ? (
 					<button
-						className="dark:text-white text-black bg-gray-800 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+						className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700"
 						onClick={() => setIsAddOpen(true)}
 					>
 						<SquarePlus />
@@ -18,7 +18,7 @@ const Navbar = ({ isAdmin, setIsAddOpen, setIsCartOpen, cartItems }) => {
 				) : (
 					<div className="relative">
 						<button
-							className="dark:text-white text-black bg-gray-800 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+							className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700"
 							onClick={() => setIsCartOpen(true)}
 						>
 							<ShoppingCart />
