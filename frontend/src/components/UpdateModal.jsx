@@ -22,13 +22,13 @@ const UpdateModal = ({ setIsUpdateOpen, id }) => {
 
 	return (
 		<div className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50">
-			<div className="max-w-sm w-full flex flex-col gap-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-				<h1 className="text-2xl text-center dark:text-white text-black font-bold">
+			<div className="max-w-sm w-full flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-md">
+				<h1 className="text-2xl text-center text-white font-bold">
 					Update Beverage
 				</h1>
 				<input
 					type="text"
-					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:bg-gray-800 focus:outline-none border-2 rounded-md dark:text-white text-black"
+					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:bg-gray-800 focus:outline-none border-2 rounded-md text-white"
 					placeholder="Beverage Name"
 					name="name"
 					value={updatedBeverage.name}
@@ -41,7 +41,7 @@ const UpdateModal = ({ setIsUpdateOpen, id }) => {
 				/>
 				<input
 					type="number"
-					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:outline-none border-2 rounded-md dark:text-white text-black"
+					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:outline-none border-2 rounded-md text-white"
 					name="price"
 					placeholder="Price"
 					value={updatedBeverage.price}
@@ -54,7 +54,7 @@ const UpdateModal = ({ setIsUpdateOpen, id }) => {
 				/>
 				<input
 					type="text"
-					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:outline-none border-2 rounded-md dark:text-white text-black"
+					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:outline-none border-2 rounded-md text-white"
 					name="image"
 					placeholder="Image URL"
 					value={updatedBeverage.image}
