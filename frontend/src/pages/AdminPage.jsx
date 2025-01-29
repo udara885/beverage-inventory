@@ -8,6 +8,7 @@ const AdminPage = ({
 	setId,
 	setOrderId,
 	setIsOrderDetailOpen,
+	setIsOrderUpdateOpen,
 }) => {
 	return (
 		<HomePage
@@ -18,6 +19,7 @@ const AdminPage = ({
 			setId={setId}
 			setOrderId={setOrderId}
 			setIsOrderDetailOpen={setIsOrderDetailOpen}
+			setIsOrderUpdateOpen={setIsOrderUpdateOpen}
 		/>
 	)
 }
