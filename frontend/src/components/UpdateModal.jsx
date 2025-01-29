@@ -3,10 +3,10 @@ import { useBeverageStore } from "../store/beverage"
 import toast from "react-hot-toast"
 
 const UpdateModal = ({ setIsUpdateOpen, id }) => {
-	const { updateBeverage } = useBeverageStore()
-	const beverage = useBeverageStore((state) =>
-		state.beverages.find((beverage) => beverage._id === id)
-	)
+	const { updateBeverage, getBeverage } = useBeverageStore()
+	
+	const beverage = getBeverage( id )
+
 	const [updatedBeverage, setUpdatedBeverage] = useState(beverage)
 
 	const handleUpdateBeverage = async (id, updatedBeverage) => {
