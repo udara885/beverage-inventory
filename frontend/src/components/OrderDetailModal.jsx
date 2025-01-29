@@ -1,11 +1,28 @@
+import toast from "react-hot-toast"
 import { useOrderStore } from "../store/order"
+import { useState } from "react"
 
 const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
-	const order = useOrderStore((state) =>
-		state.orders.find((order) => order._id === orderId)
-	)
+	const { getOrder, updateOrder } = useOrderStore()
+
+	const order = getOrder(orderId)
 
 	const orderItems = order.items
+
+	const [ completedOrder, setCompletedOrder ] = useState( order )
+	
+	console.log(completedOrder);
+	
+	const handleCompleteOrder = async (id, completedOrder) => {
+		const { success } = await updateOrder(id, completedOrder)
+		if (!success) {
+			toast.error("Failed to complete order")
+		}
+		if (success) {
+			toast.success("Order completed")
+			setIsOrderDetailOpen(false)
+		}
+	}
 
 	return (
 		<div className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50">
@@ -50,7 +67,16 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 							</h3>
 						</div>
 					</div>
-					<button className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900">
+					<button
+						className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
+						onClick={() => {
+							setCompletedOrder({
+								...completedOrder,
+								status: "completed",
+							})
+							handleCompleteOrder(orderId, completedOrder)
+						}}
+					>
 						Complete Order
 					</button>
 					<button
