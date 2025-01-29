@@ -14,6 +14,7 @@ const HomePage = ({
 	setIsDetailOpen,
 	setOrderId,
 	setIsOrderDetailOpen,
+	setIsOrderUpdateOpen,
 }) => {
 	const { getBeverages, beverages } = useBeverageStore()
 	const { getOrders, orders } = useOrderStore()
@@ -31,7 +32,7 @@ const HomePage = ({
 					<h1
 						className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center ${
 							isAdmin
-								? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 active:border-blue-500"
+								? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
 								: ""
 						}`}
 						onClick={() => setView("menu")}
@@ -42,7 +43,7 @@ const HomePage = ({
 						<h1
 							className={` text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center ${
 								isAdmin
-									? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 active:border-blue-500"
+									? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
 									: ""
 							}`}
 							onClick={() => setView("orders")}
@@ -85,6 +86,7 @@ const HomePage = ({
 						orders={orders}
 						setOrderId={setOrderId}
 						setIsOrderDetailOpen={setIsOrderDetailOpen}
+						setIsOrderUpdateOpen={setIsOrderUpdateOpen}
 					/>
 				)}
 				{view === "orders" && orders.length === 0 && (
