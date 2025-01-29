@@ -3,7 +3,12 @@ import { format } from "date-fns"
 import { useOrderStore } from "../store/order"
 import toast from "react-hot-toast"
 
-const OrdersTable = ({ orders, setOrderId, setIsOrderDetailOpen }) => {
+const OrdersTable = ({
+	orders,
+	setOrderId,
+	setIsOrderDetailOpen,
+	setIsOrderUpdateOpen,
+}) => {
 	const { deleteOrder } = useOrderStore()
 
 	const handleDelete = async (id) => {
@@ -78,7 +83,8 @@ const OrdersTable = ({ orders, setOrderId, setIsOrderDetailOpen }) => {
 								<button
 									className="mr-4 text-blue-500"
 									onClick={() => {
-										setOrderId(order._id)
+										setOrderId( order._id )
+										setIsOrderUpdateOpen( true )
 									}}
 								>
 									<Pencil />
