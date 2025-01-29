@@ -1,6 +1,5 @@
 import toast from "react-hot-toast"
 import { useOrderStore } from "../store/order"
-import { useState } from "react"
 
 const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 	const { getOrder, updateOrder } = useOrderStore()
@@ -9,19 +8,23 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 
 	const orderItems = order.items
 
-	const [ completedOrder, setCompletedOrder ] = useState( order )
-	
-	console.log(completedOrder);
-	
-	const handleCompleteOrder = async (id, completedOrder) => {
-		const { success } = await updateOrder(id, completedOrder)
+	const handleCancelOrder = async (id, updatedOrder) => {
+		const { success } = await updateOrder(id, updatedOrder)
 		if (!success) {
-			toast.error("Failed to complete order")
+			toast.error("Failed to update order")
 		}
 		if (success) {
-			toast.success("Order completed")
+			toast.success("Order updated")
 			setIsOrderDetailOpen(false)
 		}
+	}
+
+	const updateOrderStatus = (status) => {
+		const updatedOrder = {
+			...order,
+			status: status,
+		}
+		handleCancelOrder(orderId, updatedOrder)
 	}
 
 	return (
@@ -67,24 +70,30 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 							</h3>
 						</div>
 					</div>
-					<button
-						className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
-						onClick={() => {
-							setCompletedOrder({
-								...completedOrder,
-								status: "completed",
-							})
-							handleCompleteOrder(orderId, completedOrder)
-						}}
-					>
-						Complete Order
-					</button>
-					<button
-						className="w-full bg-gray-900 p-2 rounded-md font-bold text-blue-400 border-2 border-blue-400"
-						onClick={() => setIsOrderDetailOpen(false)}
-					>
-						Cancel
-					</button>
+					<div className="flex gap-3 justify-between">
+						<button
+							className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
+							onClick={() => {
+								updateOrderStatus("completed")
+							}}
+						>
+							Complete Order
+						</button>
+						<button
+							className="w-full bg-red-400 p-2 rounded-md font-bold text-gray-900"
+							onClick={() => {
+								updateOrderStatus("cancelled")
+							}}
+						>
+							Cancel Order
+						</button>
+						<button
+							className="w-full bg-gray-900 p-2 rounded-md font-bold text-blue-400 border-2 border-blue-400"
+							onClick={() => setIsOrderDetailOpen(false)}
+						>
+							Close
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
