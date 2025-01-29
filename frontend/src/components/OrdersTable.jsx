@@ -58,7 +58,9 @@ const OrdersTable = ({
 									className={`font-semibold ${
 										order.status === "pending"
 											? "text-yellow-500"
-											: "text-green-500"
+											: order.status === "completed"
+											? "text-green-500"
+											: "text-red-500"
 									}`}
 								>
 									{order.status}
@@ -83,8 +85,8 @@ const OrdersTable = ({
 								<button
 									className="mr-4 text-blue-500"
 									onClick={() => {
-										setOrderId( order._id )
-										setIsOrderUpdateOpen( true )
+										setOrderId(order._id)
+										setIsOrderUpdateOpen(true)
 									}}
 								>
 									<Pencil />
