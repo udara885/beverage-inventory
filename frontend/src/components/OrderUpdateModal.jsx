@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { useOrderStore } from "../store/order"
 
@@ -16,11 +16,18 @@ const OrderUpdateModal = ({ setIsOrderUpdateOpen, orderId }) => {
 		(acc, item) => acc + item.price * item.quantity,
 		0
 	)
+	
+	useEffect(() => {
+		setUpdatedOrder( {
+			items: orderItems,
+			total: total,
+		})
+	}, [orderItems, total])
 
 	const removeItem = (index) => {
 		const newCartItems = orderItems.filter((_, i) => i !== index)
 		setUpdatedOrder({ ...updatedOrder, items: newCartItems })
-		toast.success(`Item removed from cart`)
+		toast.success(`Item removed from order`)
 	}
 
 	const updateQuantity = (index, quantity) => {
@@ -38,6 +45,7 @@ const OrderUpdateModal = ({ setIsOrderUpdateOpen, orderId }) => {
 		if (success) {
 			toast.success(message)
 			setIsOrderUpdateOpen(false)
+			setUpdatedOrder({})
 		}
 	}
 
@@ -108,22 +116,14 @@ const OrderUpdateModal = ({ setIsOrderUpdateOpen, orderId }) => {
 					</h2>
 					<div className="flex justify-between items-center">
 						<h3 className="text-lg text-gray-300">Total</h3>
-						<h3
-							className="text-lg text-gray-200 font-bold"
-							onChange={() => {
-								setUpdatedOrder({
-									...updatedOrder,
-									total: total,
-								})
-							}}
-						>
+						<h3 className="text-lg text-gray-200 font-bold">
 							LKR {total}.00
 						</h3>
 					</div>
 				</div>
 				<button
 					className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
-					onClick={() => handleUpdateOrder(orderId, updatedOrder)}
+					onClick={() => handleUpdateOrder(order._id, updatedOrder)}
 				>
 					Update Order
 				</button>
