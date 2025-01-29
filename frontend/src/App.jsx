@@ -9,6 +9,7 @@ import UpdateModal from "./components/UpdateModal"
 import CartModal from "./components/CartModal"
 import DetailModal from "./components/DetailModal"
 import OrderDetailModal from "./components/OrderDetailModal"
+import OrderUpdateModal from "./components/OrderUpdateModal"
 
 function App() {
 	const location = useLocation()
@@ -17,7 +18,8 @@ function App() {
 	const [isUpdateOpen, setIsUpdateOpen] = useState(false)
 	const [isCartOpen, setIsCartOpen] = useState(false)
 	const [isDetailOpen, setIsDetailOpen] = useState(false)
-	const [isOrderDetailOpen, setIsOrderDetailOpen] = useState(false)
+	const [ isOrderDetailOpen, setIsOrderDetailOpen ] = useState( false )
+	const [isOrderUpdateOpen, setIsOrderUpdateOpen] = useState(false)
 	const [id, setId] = useState("")
 	const [orderId, setOrderId] = useState("")
 	const [cartItems, setCartItems] = useState([])
@@ -65,6 +67,12 @@ function App() {
 					orderId={orderId}
 				/>
 			)}
+			{isOrderUpdateOpen && (
+				<OrderUpdateModal
+					setIsOrderUpdateOpen={setIsOrderUpdateOpen}
+					orderId={orderId}
+				/>
+			)}
 			<Routes>
 				<Route
 					path="/"
@@ -88,6 +96,7 @@ function App() {
 							setId={setId}
 							setOrderId={setOrderId}
 							setIsOrderDetailOpen={setIsOrderDetailOpen}
+							setIsOrderUpdateOpen={setIsOrderUpdateOpen}
 						/>
 					}
 				/>
