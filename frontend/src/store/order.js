@@ -1,12 +1,16 @@
 import { create } from "zustand"
 
-export const useOrderStore = create((set) => ({
+export const useOrderStore = create((set, get) => ({
 	orders: [],
 	setOrders: (orders) => set({ orders }),
 	getOrders: async () => {
 		const res = await fetch("/api/orders")
 		const data = await res.json()
 		set({ orders: data.data })
+	},
+	getOrder: ( id ) =>
+	{ 
+		return get().orders.find((order) => order._id === id)
 	},
 	createOrder: async (newOrder) => {
 		if (newOrder.items.length === 0) {
