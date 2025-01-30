@@ -1,13 +1,40 @@
 import { ShoppingCart, SquarePlus } from "lucide-react"
 import { Link } from "react-router-dom"
 
-const Navbar = ({ isAdmin, setIsAddOpen, setIsCartOpen, cartItems }) => {
+const Navbar = ({
+	isAdmin,
+	setIsAddOpen,
+	setIsCartOpen,
+	cartItems,
+	setView,
+}) => {
 	return (
-		<div className="max-w-screen-xl mx-auto">
-			<div className="flex h-16 items-center justify-between">
+		<div className="max-w-screen-xl mx-auto border-b-2 border-gray-800 pb-5">
+			<div className="flex items-center justify-between">
 				<h1 className="text-2xl sm:text-3xl font-bold uppercase text-center bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
 					<Link to={"/"}>Beverage Store</Link>
 				</h1>
+				{isAdmin && (
+					<div className="flex items-center gap-10">
+						<h1
+							className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
+							onClick={() => setView("menu")}
+						>
+							Menu
+						</h1>
+
+						<h1
+							className={`text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center ${
+								isAdmin
+									? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
+									: ""
+							}`}
+							onClick={() => setView("orders")}
+						>
+							Orders
+						</h1>
+					</div>
+				)}
 				{isAdmin ? (
 					<button
 						className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700"
