@@ -52,8 +52,17 @@ const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
 		setCartItems(newCartItems)
 	}
 
+	const handleClose = (e) => {
+		if (e.target === e.currentTarget) {
+			setIsCartOpen(false)
+		}
+	}
+
 	return (
-		<div className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50">
+		<div
+			className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50"
+			onClick={handleClose}
+		>
 			<div className="max-w-lg max-h-full w-full flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-md">
 				<h1 className="text-2xl text-center text-white font-bold">
 					Cart
@@ -129,12 +138,6 @@ const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
 					onClick={handleCreateOrder}
 				>
 					Place Order
-				</button>
-				<button
-					className="w-full bg-gray-900 p-2 rounded-md font-bold text-blue-400 border-2 border-blue-400"
-					onClick={() => setIsCartOpen(false)}
-				>
-					Cancel
 				</button>
 			</div>
 		</div>
