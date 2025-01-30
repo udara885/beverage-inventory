@@ -28,8 +28,17 @@ const AddModal = ({ setIsAddOpen }) => {
 		})
 	}
 
+	const handleClose = (e) => {
+		if (e.target === e.currentTarget) {
+			setIsAddOpen(false)
+		}
+	}
+
 	return (
-		<div className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50">
+		<div
+			className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50"
+			onClick={handleClose}
+		>
 			<div className="max-w-sm w-full flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-md">
 				<h1 className="text-2xl text-center text-white font-bold">
 					Add New Beverage
@@ -91,12 +100,6 @@ const AddModal = ({ setIsAddOpen }) => {
 					onClick={handleAddBeverage}
 				>
 					Add Beverage
-				</button>
-				<button
-					className="w-full bg-gray-900 p-2 rounded-md font-bold text-blue-400 border-2 border-blue-400"
-					onClick={() => setIsAddOpen(false)}
-				>
-					Cancel
 				</button>
 			</div>
 		</div>
