@@ -15,10 +15,13 @@ const HomePage = ({
 	setOrderId,
 	setIsOrderDetailOpen,
 	setIsOrderUpdateOpen,
+	view,
 }) => {
 	const { getBeverages, beverages } = useBeverageStore()
 	const { getOrders, orders } = useOrderStore()
-	const [view, setView] = useState("menu")
+	const [category, setCategory] = useState("Coffee")
+
+	const categories = ["Coffee", "Shakes", "Tea", "Bubble Tea"]
 
 	useEffect(() => {
 		getBeverages()
@@ -28,44 +31,36 @@ const HomePage = ({
 	return (
 		<div className="max-w-screen-xl mx-auto">
 			<div className="flex flex-col gap-8">
-				<div className="flex items-center justify-center gap-10">
-					<h1
-						className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center ${
-							isAdmin
-								? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
-								: ""
-						}`}
-						onClick={() => setView("menu")}
-					>
-						Menu
-					</h1>
-					{isAdmin && (
-						<h1
-							className={` text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center ${
-								isAdmin
-									? "cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
-									: ""
-							}`}
-							onClick={() => setView("orders")}
-						>
-							Orders
-						</h1>
-					)}
-				</div>
-				{view === "menu" && (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
-						{beverages.map((beverage) => (
-							<BeverageCard
-								key={beverage._id}
-								beverage={beverage}
-								isAdmin={isAdmin}
-								setIsUpdateOpen={setIsUpdateOpen}
-								setId={setId}
-								cartItems={cartItems}
-								setCartItems={setCartItems}
-								setIsDetailOpen={setIsDetailOpen}
-							/>
+				<div className="grid grid-cols-2 gap-x-5 sm:grid-cols-4 sm:gap-x-10">
+					{view === "menu" &&
+						categories.map((category, index) => (
+							<h1
+								className="text-xl sm:text-2xl font-bold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
+								onClick={() => setCategory(category)}
+								key={index}
+							>
+								{category}
+							</h1>
 						))}
+				</div>
+				{view === "menu" && category && (
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+						{beverages
+							.filter(
+								(beverage) => beverage.category === category
+							)
+							.map((beverage) => (
+								<BeverageCard
+									key={beverage._id}
+									beverage={beverage}
+									isAdmin={isAdmin}
+									setIsUpdateOpen={setIsUpdateOpen}
+									setId={setId}
+									cartItems={cartItems}
+									setCartItems={setCartItems}
+									setIsDetailOpen={setIsDetailOpen}
+								/>
+							))}
 					</div>
 				)}
 				{view === "menu" && beverages.length === 0 && (
