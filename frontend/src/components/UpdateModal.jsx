@@ -61,6 +61,23 @@ const UpdateModal = ({ setIsUpdateOpen, id }) => {
 						})
 					}
 				/>
+				<select
+					name="category"
+					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:outline-none border-2 rounded-md text-white"
+					value={updatedBeverage.category}
+					onChange={(e) =>
+						setUpdatedBeverage({
+							...updatedBeverage,
+							category: e.target.value,
+						})
+					}
+				>
+					<option>Select the Category</option>
+					<option value="Coffee">Coffee</option>
+					<option value="Shakes">Shakes</option>
+					<option value="Tea">Tea</option>
+					<option value="Bubble Tea">Bubble Tea</option>
+				</select>
 				<input
 					type="text"
 					className="bg-gray-800 border-gray-500 p-2 focus:border-blue-400 focus:outline-none border-2 rounded-md text-white"
