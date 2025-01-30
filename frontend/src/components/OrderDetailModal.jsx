@@ -27,8 +27,17 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 		handleCancelOrder(orderId, updatedOrder)
 	}
 
+	const handleClose = (e) => {
+		if (e.target === e.currentTarget) {
+			setIsOrderDetailOpen(false)
+		}
+	}
+
 	return (
-		<div className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50">
+		<div
+			className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50"
+			onClick={handleClose}
+		>
 			<div className="max-w-lg max-h-full w-full flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-md">
 				<h1 className="text-2xl text-center text-white font-bold">
 					Order #{orderId}
@@ -72,14 +81,6 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 					</div>
 					<div className="flex gap-3 justify-between">
 						<button
-							className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
-							onClick={() => {
-								updateOrderStatus("completed")
-							}}
-						>
-							Complete Order
-						</button>
-						<button
 							className="w-full bg-red-400 p-2 rounded-md font-bold text-gray-900"
 							onClick={() => {
 								updateOrderStatus("cancelled")
@@ -88,10 +89,12 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 							Cancel Order
 						</button>
 						<button
-							className="w-full bg-gray-900 p-2 rounded-md font-bold text-blue-400 border-2 border-blue-400"
-							onClick={() => setIsOrderDetailOpen(false)}
+							className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
+							onClick={() => {
+								updateOrderStatus("completed")
+							}}
 						>
-							Close
+							Complete Order
 						</button>
 					</div>
 				</div>
