@@ -1,4 +1,4 @@
-# Beverage Inventory
+# Beverage Store
 
 This is a simple Beverage Store App built using MERN stack. This app is divided into user and admin UI. The users can see what are available beverages with their image, name and price. Admin can do CRUD operations for the beverages in admin panel.
 
