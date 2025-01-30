@@ -14,6 +14,10 @@ const beverageSchema = new mongoose.Schema(
 			type: Number,
 			default: 1,
 		},
+		category: {
+			type: String,
+			required: true,
+		},
 		description: {
 			type: String,
 			required: true,
