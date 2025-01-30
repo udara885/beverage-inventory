@@ -22,7 +22,8 @@ function App() {
 	const [isOrderUpdateOpen, setIsOrderUpdateOpen] = useState(false)
 	const [id, setId] = useState("")
 	const [orderId, setOrderId] = useState("")
-	const [cartItems, setCartItems] = useState([])
+	const [ cartItems, setCartItems ] = useState( [] )
+	const [view, setView] = useState("menu")
 
 	useEffect(() => {
 		if (location.pathname === "/admin") {
@@ -39,7 +40,8 @@ function App() {
 				isAdmin={isAdmin}
 				setIsAddOpen={setIsAddOpen}
 				setIsCartOpen={setIsCartOpen}
-				cartItems={cartItems}
+				cartItems={ cartItems }
+				setView={setView}
 			/>
 			{isAddOpen && <AddModal setIsAddOpen={setIsAddOpen} />}
 			{isUpdateOpen && (
@@ -61,6 +63,7 @@ function App() {
 					id={ id }
 					cartItems={ cartItems }
 					setCartItems={ setCartItems }
+					isAdmin={ isAdmin }
 				/>
 			)}
 			{isOrderDetailOpen && (
@@ -83,7 +86,8 @@ function App() {
 							cartItems={cartItems}
 							setCartItems={setCartItems}
 							setIsDetailOpen={setIsDetailOpen}
-							setId={setId}
+							setId={ setId }
+							view={view}
 						/>
 					}
 				/>
@@ -98,7 +102,8 @@ function App() {
 							setId={setId}
 							setOrderId={setOrderId}
 							setIsOrderDetailOpen={setIsOrderDetailOpen}
-							setIsOrderUpdateOpen={setIsOrderUpdateOpen}
+							setIsOrderUpdateOpen={ setIsOrderUpdateOpen }
+							view={view}
 						/>
 					}
 				/>
