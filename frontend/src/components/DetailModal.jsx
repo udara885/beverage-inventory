@@ -1,12 +1,22 @@
+import toast from "react-hot-toast"
 import { useBeverageStore } from "../store/beverage"
 
-const DetailModal = ({ setIsDetailOpen, id }) => {
+const DetailModal = ({ setIsDetailOpen, id, cartItems, setCartItems }) => {
 	const beverage = useBeverageStore((state) =>
 		state.beverages.find((beverage) => beverage._id === id)
 	)
 
+	const handleClose = (e) => {
+		if (e.target === e.currentTarget) {
+			setIsDetailOpen(false)
+		}
+	}
+
 	return (
-		<div className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50">
+		<div
+			className="flex items-center bg-black justify-center inset-0 fixed bg-opacity-50"
+			onClick={handleClose}
+		>
 			<div className="max-w-sm w-full flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-md">
 				<img
 					src={beverage.image}
@@ -25,10 +35,19 @@ const DetailModal = ({ setIsDetailOpen, id }) => {
 					{beverage.description}
 				</p>
 				<button
-					className="w-full bg-gray-900 p-2 rounded-md font-bold text-blue-400 border-2 border-blue-400"
-					onClick={() => setIsDetailOpen(false)}
+					className="w-full p-2 bg-blue-400 hover:bg-blue-500 rounded-md font-bold text-gray-900"
+					onClick={() => {
+						if (
+							cartItems.find((item) => item._id === beverage._id)
+						) {
+							toast.error(`Item already in cart`)
+						} else {
+							setCartItems([...cartItems, beverage])
+							toast.success(`Item added to cart`)
+						}
+					}}
 				>
-					Close
+					Add to Cart
 				</button>
 			</div>
 		</div>
