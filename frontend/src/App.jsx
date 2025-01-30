@@ -58,7 +58,9 @@ function App() {
 			{isDetailOpen && (
 				<DetailModal
 					setIsDetailOpen={setIsDetailOpen}
-					id={id}
+					id={ id }
+					cartItems={ cartItems }
+					setCartItems={ setCartItems }
 				/>
 			)}
 			{isOrderDetailOpen && (
