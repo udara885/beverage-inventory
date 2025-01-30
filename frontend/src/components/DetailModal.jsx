@@ -1,7 +1,7 @@
 import toast from "react-hot-toast"
 import { useBeverageStore } from "../store/beverage"
 
-const DetailModal = ({ setIsDetailOpen, id, cartItems, setCartItems }) => {
+const DetailModal = ({ setIsDetailOpen, id, cartItems, setCartItems, isAdmin }) => {
 	const beverage = useBeverageStore((state) =>
 		state.beverages.find((beverage) => beverage._id === id)
 	)
@@ -27,14 +27,17 @@ const DetailModal = ({ setIsDetailOpen, id, cartItems, setCartItems }) => {
 					<h1 className="text-2xl text-white font-bold">
 						{beverage.name}
 					</h1>
-					<h2 className="text-lg text-gray-200 font-bold">
+					<h2 className="text-xl text-gray-200 font-bold">
 						LKR {beverage.price}.00
 					</h2>
 				</div>
+				<h3 className="text-gray-200 text-lg font-semibold">
+					Category: {beverage.category}
+				</h3>
 				<p className="text-gray-300 text-justify mb-2">
 					{beverage.description}
 				</p>
-				<button
+				{!isAdmin && <button
 					className="w-full p-2 bg-blue-400 hover:bg-blue-500 rounded-md font-bold text-gray-900"
 					onClick={() => {
 						if (
@@ -48,7 +51,7 @@ const DetailModal = ({ setIsDetailOpen, id, cartItems, setCartItems }) => {
 					}}
 				>
 					Add to Cart
-				</button>
+				</button>}
 			</div>
 		</div>
 	)
