@@ -1,4 +1,4 @@
-import { ShoppingCart, SquarePlus } from "lucide-react"
+import { CircleUserRound, ShoppingCart, SquarePlus } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const Navbar = ({
@@ -12,7 +12,9 @@ const Navbar = ({
 		<div className="max-w-screen-xl mx-auto border-b-2 border-gray-800 pb-5">
 			<div className="flex items-center justify-between">
 				<h1 className="text-2xl sm:text-3xl font-bold uppercase text-center bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-					<Link to={"/"}>Beverage Store</Link>
+					<Link to={`${isAdmin ? "/admin" : "/"}`}>
+						Beverage Store
+					</Link>
 				</h1>
 				{isAdmin && (
 					<div className="flex items-center gap-10">
@@ -35,26 +37,33 @@ const Navbar = ({
 						</h1>
 					</div>
 				)}
-				{isAdmin ? (
-					<button
-						className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700"
-						onClick={() => setIsAddOpen(true)}
-					>
-						<SquarePlus />
-					</button>
-				) : (
-					<div className="relative">
+				<div className="flex items-center gap-3">
+					{isAdmin ? (
 						<button
 							className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700"
-							onClick={() => setIsCartOpen(true)}
+							onClick={() => setIsAddOpen(true)}
 						>
-							<ShoppingCart />
+							<SquarePlus />
 						</button>
-						<div className="bg-blue-400 w-6 rounded-full flex items-center justify-center text-gray-900 font-semibold absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
-							{cartItems.length}
+					) : (
+						<div className="relative">
+							<button
+								className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700"
+								onClick={() => setIsCartOpen(true)}
+							>
+								<ShoppingCart />
+							</button>
+							<div className="bg-blue-400 w-6 rounded-full flex items-center justify-center text-gray-900 font-semibold absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
+								{cartItems.length}
+							</div>
 						</div>
-					</div>
-				)}
+					)}
+					<Link to={`${isAdmin ? "/" : "/admin"}`}>
+						<button className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700">
+							<CircleUserRound />
+						</button>
+					</Link>
+				</div>
 			</div>
 		</div>
 	)
