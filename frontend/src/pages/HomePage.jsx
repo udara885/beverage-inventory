@@ -19,9 +19,17 @@ const HomePage = ({
 }) => {
 	const { getBeverages, beverages } = useBeverageStore()
 	const { getOrders, orders } = useOrderStore()
-	const [category, setCategory] = useState("Coffee")
+	const [menuCategory, setMenuCategory] = useState("All")
+	const [orderCategory, setOrderCategory] = useState("All")
 
-	const categories = ["Coffee", "Shakes", "Tea", "Bubble Tea"]
+	const menuCategories = ["All", "Coffee", "Shakes", "Tea", "Bubble Tea"]
+	const orderCategories = ["All", "Pending", "Completed", "Cancelled"]
+
+	const categoryOrders = orders.filter((order) =>
+		orderCategory === "All"
+			? order
+			: order.status === orderCategory.toLowerCase()
+	)
 
 	useEffect(() => {
 		getBeverages()
@@ -31,23 +39,33 @@ const HomePage = ({
 	return (
 		<div className="max-w-screen-xl mx-auto">
 			<div className="flex flex-col gap-8">
-				<div className="grid grid-cols-2 gap-x-5 sm:grid-cols-4 sm:gap-x-10">
-					{view === "menu" &&
-						categories.map((category, index) => (
-							<h1
-								className="text-xl sm:text-2xl font-bold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
-								onClick={() => setCategory(category)}
-								key={index}
-							>
-								{category}
-							</h1>
-						))}
+				<div className="grid grid-cols-2 gap-x-5 sm:grid-cols-5 sm:gap-x-10">
+					{view === "menu"
+						? menuCategories.map((category, index) => (
+								<h1
+									className="text-xl sm:text-2xl font-bold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
+									onClick={() => setMenuCategory(category)}
+									key={index}
+								>
+									{category}
+								</h1>
+						  ))
+						: view === "orders" &&
+						  orderCategories.map((category, index) => (
+								<h1
+									className="text-xl sm:text-2xl font-bold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
+									onClick={() => setOrderCategory(category)}
+									key={index}
+								>
+									{category}
+								</h1>
+						  ))}
 				</div>
-				{view === "menu" && category && (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
+				{view === "menu" && menuCategory && (
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
 						{beverages
 							.filter(
-								(beverage) => beverage.category === category
+								(beverage) => menuCategory === "All" ? beverage : beverage.category === menuCategory
 							)
 							.map((beverage) => (
 								<BeverageCard
@@ -78,7 +96,7 @@ const HomePage = ({
 				)}
 				{view === "orders" && (
 					<OrdersTable
-						orders={orders}
+						orders={categoryOrders}
 						setOrderId={setOrderId}
 						setIsOrderDetailOpen={setIsOrderDetailOpen}
 						setIsOrderUpdateOpen={setIsOrderUpdateOpen}
