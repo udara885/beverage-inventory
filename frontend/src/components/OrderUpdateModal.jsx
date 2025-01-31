@@ -65,58 +65,66 @@ const OrderUpdateModal = ({ setIsOrderUpdateOpen, orderId }) => {
 					Update Order #{orderId}
 				</h1>
 				<hr className="bg-gray-400 border-0 h-px" />
-				<div className="flex flex-col gap-4 overflow-x-auto">
-					{orderItems.map((item, index) => (
-						<div
-							className="flex items-center justify-around mb-3"
-							key={item._id}
-						>
-							<img
-								src={item.image}
-								alt={item.name}
-								className="w-16 h-16 rounded-md mr-2"
-							/>
-							<h2 className="font-semibold text-lg text-gray-200 !w-28 mr-2">
-								{item.name}
-							</h2>
-							<div className="flex items-center gap-2 mr-6">
+				<div className="flex flex-col gap-4">
+					<div className="overflow-auto max-h-56">
+						{orderItems.map((item, index) => (
+							<div
+								className="flex items-center justify-around mb-3"
+								key={item._id}
+							>
+								<img
+									src={item.image}
+									alt={item.name}
+									className="w-16 h-16 rounded-md mr-2"
+								/>
+								<h2 className="font-semibold text-lg text-gray-200 !w-28 mr-2">
+									{item.name}
+								</h2>
+								<div className="flex items-center gap-2 mr-6">
+									<button
+										className={`text-gray-100 text-lg font-medium bg-gray-700 h-6 w-6 p-2 rounded-md hover:bg-gray-600 flex items-center justify-center ${
+											item.quantity <= 1 &&
+											"cursor-not-allowed"
+										}`}
+										onClick={() => {
+											updateQuantity(
+												index,
+												item.quantity - 1
+											)
+										}}
+										disabled={item.quantity <= 1}
+									>
+										-
+									</button>
+									<span className="text-gray-200 font-semibold">
+										{item.quantity}
+									</span>
+									<button
+										className="text-gray-100 text-lg font-medium bg-gray-700 h-6 w-6 p-2 rounded-md hover:bg-gray-600 flex items-center justify-center"
+										onClick={() => {
+											updateQuantity(
+												index,
+												item.quantity + 1
+											)
+										}}
+									>
+										+
+									</button>
+								</div>
+								<h2 className="font-bold text-lg text-gray-200 !w-24 mr-6">
+									LKR {item.price}.00
+								</h2>
 								<button
-									className={`text-gray-100 text-lg font-medium bg-gray-700 h-6 w-6 p-2 rounded-md hover:bg-gray-600 flex items-center justify-center ${
-										item.quantity <= 1 &&
-										"cursor-not-allowed"
-									}`}
+									className="text-red-400 mr-2"
 									onClick={() => {
-										updateQuantity(index, item.quantity - 1)
-									}}
-									disabled={item.quantity <= 1}
-								>
-									-
-								</button>
-								<span className="text-gray-200 font-semibold">
-									{item.quantity}
-								</span>
-								<button
-									className="text-gray-100 text-lg font-medium bg-gray-700 h-6 w-6 p-2 rounded-md hover:bg-gray-600 flex items-center justify-center"
-									onClick={() => {
-										updateQuantity(index, item.quantity + 1)
+										removeItem(index)
 									}}
 								>
-									+
+									<Trash2 />
 								</button>
 							</div>
-							<h2 className="font-bold text-lg text-gray-200 !w-24 mr-6">
-								LKR {item.price}.00
-							</h2>
-							<button
-								className="text-red-400"
-								onClick={() => {
-									removeItem(index)
-								}}
-							>
-								<Trash2 />
-							</button>
-						</div>
-					))}
+						))}
+					</div>
 				</div>
 				<hr className="bg-gray-400 border-0 h-px" />
 				<div className="bg-gray-700 w-full rounded-md p-2">
