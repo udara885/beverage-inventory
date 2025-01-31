@@ -50,7 +50,7 @@ const HomePage = ({
 									{category}
 								</h1>
 						  ))
-						: view === "orders" &&
+						: isAdmin && view === "orders" &&
 						  orderCategories.map((category, index) => (
 								<h1
 									className="text-xl sm:text-2xl font-bold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
@@ -94,7 +94,7 @@ const HomePage = ({
 						)}
 					</p>
 				)}
-				{view === "orders" && (
+				{isAdmin && view === "orders" && (
 					<OrdersTable
 						orders={categoryOrders}
 						setOrderId={setOrderId}
@@ -102,7 +102,7 @@ const HomePage = ({
 						setIsOrderUpdateOpen={setIsOrderUpdateOpen}
 					/>
 				)}
-				{view === "orders" && orders.length === 0 && (
+				{isAdmin && view === "orders" && orders.length === 0 && (
 					<p className="text-xl text-center font-bold text-gray-500">
 						No orders found 😥.{" "}
 					</p>
