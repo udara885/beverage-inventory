@@ -11,6 +11,8 @@ const OrdersTable = ({
 }) => {
 	const { deleteOrder } = useOrderStore()
 
+	const reversedOrders = [...orders].reverse()
+
 	const handleDelete = async (id) => {
 		const { success, message } = await deleteOrder(id)
 		if (!success) {
@@ -44,7 +46,7 @@ const OrdersTable = ({
 				</thead>
 
 				<tbody className="whitespace-nowrap">
-					{orders.map((order) => (
+					{reversedOrders.map((order) => (
 						<tr
 							className="hover:bg-gray-600 bg-gray-700 cursor-pointer"
 							key={order._id}
@@ -82,15 +84,17 @@ const OrdersTable = ({
 								>
 									<Info />
 								</button>
-								<button
-									className="mr-4 text-blue-500"
-									onClick={() => {
-										setOrderId(order._id)
-										setIsOrderUpdateOpen(true)
-									}}
-								>
-									<Pencil />
-								</button>
+								{order.status === "pending" && (
+									<button
+										className="mr-4 text-blue-500"
+										onClick={() => {
+											setOrderId(order._id)
+											setIsOrderUpdateOpen(true)
+										}}
+									>
+										<Pencil />
+									</button>
+								)}
 								<button
 									className="mr-4 text-red-500"
 									onClick={() => {
