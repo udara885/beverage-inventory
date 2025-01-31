@@ -42,8 +42,22 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 				<h1 className="text-2xl text-center text-white font-bold">
 					Order #{orderId}
 				</h1>
+				<span
+					className={`${
+						order.status === "pending"
+							? "bg-yellow-500 border-yellow-500 text-yellow-500"
+							: order.status === "completed"
+							? "bg-green-500 border-green-500 text-green-500"
+							: order.status === "cancelled"
+							? "bg-red-500 border-red-500 text-red-500"
+							: ""
+					} text-center rounded-full mx-auto px-3 py-1 bg-opacity-40 border font-bold capitalize`}
+				>
+					{order.status}
+				</span>
 				<hr className="bg-gray-400 border-0 h-px" />
-				<div className="flex flex-col gap-4 overflow-x-auto">
+				<div className="flex flex-col gap-4">
+					<div className="overflow-auto max-h-56">
 					{orderItems.map((item, index) => (
 						<div
 							className="flex items-center justify-around mb-3"
@@ -66,7 +80,8 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 								LKR {item.price}.00
 							</h2>
 						</div>
-					))}
+					) ) }
+					</div>
 					<hr className="bg-gray-400 border-0 h-px" />
 					<div className="bg-gray-700 w-full rounded-md p-2">
 						<h2 className="text-xl text-gray-200 font-bold mb-3">
@@ -79,24 +94,26 @@ const OrderDetailModal = ({ setIsOrderDetailOpen, orderId }) => {
 							</h3>
 						</div>
 					</div>
-					<div className="flex gap-3 justify-between">
-						<button
-							className="w-full bg-red-400 p-2 rounded-md font-bold text-gray-900"
-							onClick={() => {
-								updateOrderStatus("cancelled")
-							}}
-						>
-							Cancel Order
-						</button>
-						<button
-							className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
-							onClick={() => {
-								updateOrderStatus("completed")
-							}}
-						>
-							Complete Order
-						</button>
-					</div>
+					{order.status === "pending" && (
+						<div className="flex gap-3 justify-between">
+							<button
+								className="w-full bg-red-400 p-2 rounded-md font-bold text-gray-900"
+								onClick={() => {
+									updateOrderStatus("cancelled")
+								}}
+							>
+								Cancel Order
+							</button>
+							<button
+								className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
+								onClick={() => {
+									updateOrderStatus("completed")
+								}}
+							>
+								Complete Order
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
