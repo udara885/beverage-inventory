@@ -66,13 +66,13 @@ const Navbar = ({
 			</div>
 			{isNavOpen && <div className="flex flex-col justify-center gap-3 mt-4 md:hidden">
 				<h1
-					className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500 mx-w-xs mx-auto"
+					className="text-xl sm:text-2xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500 mx-w-xs mx-auto"
 					onClick={() => setView("menu")}
 				>
 					Menu
 				</h1>
 				<h1
-					className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500 max-w-xs mx-auto"
+					className="text-xl sm:text-2xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500 max-w-xs mx-auto"
 					onClick={() => setView("orders")}
 				>
 					Orders
