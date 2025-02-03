@@ -10,6 +10,7 @@ import CartModal from "./components/CartModal"
 import DetailModal from "./components/DetailModal"
 import OrderDetailModal from "./components/OrderDetailModal"
 import OrderUpdateModal from "./components/OrderUpdateModal"
+import PaymentModal from "./components/PaymentModal"
 
 function App() {
 	const location = useLocation()
@@ -18,11 +19,16 @@ function App() {
 	const [isUpdateOpen, setIsUpdateOpen] = useState(false)
 	const [isCartOpen, setIsCartOpen] = useState(false)
 	const [isDetailOpen, setIsDetailOpen] = useState(false)
-	const [ isOrderDetailOpen, setIsOrderDetailOpen ] = useState( false )
+	const [isOrderDetailOpen, setIsOrderDetailOpen] = useState(false)
 	const [isOrderUpdateOpen, setIsOrderUpdateOpen] = useState(false)
+	const [isPaymentOpen, setIsPaymentOpen] = useState(false)
+	const [newOrder, setNewOrder] = useState({
+		items: [],
+		total: 0,
+	})
 	const [id, setId] = useState("")
 	const [orderId, setOrderId] = useState("")
-	const [ cartItems, setCartItems ] = useState( [] )
+	const [cartItems, setCartItems] = useState([])
 	const [view, setView] = useState("menu")
 
 	useEffect(() => {
@@ -40,7 +46,7 @@ function App() {
 				isAdmin={isAdmin}
 				setIsAddOpen={setIsAddOpen}
 				setIsCartOpen={setIsCartOpen}
-				cartItems={ cartItems }
+				cartItems={cartItems}
 				setView={setView}
 			/>
 			{isAddOpen && <AddModal setIsAddOpen={setIsAddOpen} />}
@@ -55,15 +61,18 @@ function App() {
 					setIsCartOpen={setIsCartOpen}
 					cartItems={cartItems}
 					setCartItems={setCartItems}
+					newOrder={newOrder}
+					setNewOrder={ setNewOrder }
+					setIsPaymentOpen={setIsPaymentOpen}
 				/>
 			)}
 			{isDetailOpen && (
 				<DetailModal
 					setIsDetailOpen={setIsDetailOpen}
-					id={ id }
-					cartItems={ cartItems }
-					setCartItems={ setCartItems }
-					isAdmin={ isAdmin }
+					id={id}
+					cartItems={cartItems}
+					setCartItems={setCartItems}
+					isAdmin={isAdmin}
 				/>
 			)}
 			{isOrderDetailOpen && (
@@ -78,6 +87,14 @@ function App() {
 					orderId={orderId}
 				/>
 			)}
+			{isPaymentOpen && (
+				<PaymentModal
+					setIsPaymentOpen={setIsPaymentOpen}
+					newOrder={newOrder}
+					setCartItems={setCartItems}
+					setNewOrder={setNewOrder}
+				/>
+			)}
 			<Routes>
 				<Route
 					path="/"
@@ -86,7 +103,7 @@ function App() {
 							cartItems={cartItems}
 							setCartItems={setCartItems}
 							setIsDetailOpen={setIsDetailOpen}
-							setId={ setId }
+							setId={setId}
 							view={view}
 						/>
 					}
@@ -102,7 +119,7 @@ function App() {
 							setId={setId}
 							setOrderId={setOrderId}
 							setIsOrderDetailOpen={setIsOrderDetailOpen}
-							setIsOrderUpdateOpen={ setIsOrderUpdateOpen }
+							setIsOrderUpdateOpen={setIsOrderUpdateOpen}
 							view={view}
 						/>
 					}
