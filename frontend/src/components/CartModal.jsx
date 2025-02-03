@@ -1,18 +1,18 @@
 import { Trash2 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import toast from "react-hot-toast"
-import { useOrderStore } from "../store/order"
 
-const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
+const CartModal = ({
+	setIsCartOpen,
+	cartItems,
+	setCartItems,
+	setNewOrder,
+	setIsPaymentOpen,
+}) => {
 	const total = cartItems.reduce(
 		(acc, item) => acc + item.price * item.quantity,
 		0
 	)
-
-	const [newOrder, setNewOrder] = useState({
-		items: [],
-		total: 0,
-	})
 
 	useEffect(() => {
 		setNewOrder({
@@ -20,24 +20,6 @@ const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
 			total: total,
 		})
 	}, [cartItems, total])
-
-	const { createOrder } = useOrderStore()
-
-	const handleCreateOrder = async () => {
-		const { success, message } = await createOrder(newOrder)
-
-		if (!success) {
-			toast.error(message)
-		} else {
-			toast.success(message)
-			setIsCartOpen(false)
-		}
-		setNewOrder({
-			items: [],
-			total: 0,
-		})
-		setCartItems([])
-	}
 
 	const removeItem = (index) => {
 		const newCartItems = cartItems.filter((_, i) => i !== index)
@@ -135,9 +117,16 @@ const CartModal = ({ setIsCartOpen, cartItems, setCartItems }) => {
 				</div>
 				<button
 					className="w-full bg-blue-400 p-2 rounded-md font-bold text-gray-900"
-					onClick={handleCreateOrder}
+					onClick={() => {
+						if (cartItems.length > 0) {
+							setIsCartOpen(false)
+							setIsPaymentOpen(true)
+						} else {
+							toast.error("Please add items to the order")
+						}
+					}}
 				>
-					Place Order
+					Pay
 				</button>
 			</div>
 		</div>
