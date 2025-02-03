@@ -43,7 +43,7 @@ const HomePage = ({
 					{view === "menu"
 						? menuCategories.map((category, index) => (
 								<h1
-									className="text-xl sm:text-2xl font-bold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
+									className="text-xl sm:text-2xl font-semibold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
 									onClick={() => setMenuCategory(category)}
 									key={index}
 								>
@@ -53,7 +53,7 @@ const HomePage = ({
 						: isAdmin && view === "orders" &&
 						  orderCategories.map((category, index) => (
 								<h1
-									className="text-xl sm:text-2xl font-bold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
+									className="text-xl sm:text-2xl font-semibold cursor-pointer mt-5 bg-blue-400 rounded-full py-1 w-full text-center hover:bg-blue-600 focus:bg-blue-500"
 									onClick={() => setOrderCategory(category)}
 									key={index}
 								>
