@@ -1,4 +1,4 @@
-import { CircleUserRound, Menu, ShoppingCart, SquarePlus } from "lucide-react"
+import { Menu, ShoppingCart, SquarePlus } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -23,13 +23,13 @@ const Navbar = ({
 				{isAdmin && (
 					<div className="items-center gap-10 hidden md:flex">
 						<h1
-							className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
+							className="text-xl sm:text-2xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
 							onClick={() => setView("menu")}
 						>
 							Menu
 						</h1>
 						<h1
-							className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
+							className="text-xl sm:text-2xl bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent text-center cursor-pointer border-b-2 border-transparent hover:border-blue-500 focus:border-blue-500"
 							onClick={() => setView("orders")}
 						>
 							Orders
@@ -57,11 +57,6 @@ const Navbar = ({
 							</div>
 						</div>
 					)}
-					<Link to={`${isAdmin ? "/" : "/admin"}`}>
-						<button className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700">
-							<CircleUserRound />
-						</button>
-					</Link>
 					{isAdmin && (
 						<button className="text-white bg-gray-800 p-2 rounded-md hover:bg-gray-700 md:hidden" onClick={() => setIsNavOpen(!isNavOpen)}>
 							<Menu />
