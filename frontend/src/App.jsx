@@ -34,8 +34,6 @@ function App() {
 	useEffect(() => {
 		if (location.pathname === "/admin") {
 			setIsAdmin(true)
-		} else {
-			setIsAdmin(false)
 		}
 	}, [location.pathname])
 
@@ -104,7 +102,8 @@ function App() {
 							setCartItems={setCartItems}
 							setIsDetailOpen={setIsDetailOpen}
 							setId={setId}
-							view={view}
+							view={ view }
+							isAdmin={isAdmin}
 						/>
 					}
 				/>
