@@ -7,16 +7,17 @@ const PaymentModal = ({
 	newOrder,
 	setCartItems,
 	setNewOrder,
+	socket
 }) => {
 	const [cardNumber, setCardNumber] = useState("")
 	const [expiration, setExpiration] = useState("")
 	const [cvc, setCvc] = useState("")
 
-	const handleClose = (e) => {
+	const handleClose = ((e) => {
 		if (e.target === e.currentTarget) {
 			setIsPaymentOpen(false)
 		}
-	}
+	})
 
 	const { createOrder } = useOrderStore()
 
@@ -26,7 +27,8 @@ const PaymentModal = ({
 		if (!success) {
 			toast.error(message)
 		} else {
-			toast.success(message)
+			toast.success( message )
+			socket.emit("place-order", {message: "New order recieved"})
 			setIsPaymentOpen(false)
 		}
 		setNewOrder({
